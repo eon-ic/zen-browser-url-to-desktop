@@ -34,7 +34,6 @@ pub fn get_logo_png(url: String) -> Option<Vec<u8>> {
             .output()
             .map(|o| o.stdout)
             .unwrap();
-        println!("123");
         return Some(bytes);
     } else {
         let bytes = Command::new("curl")
@@ -44,7 +43,6 @@ pub fn get_logo_png(url: String) -> Option<Vec<u8>> {
             .output()
             .map(|o| o.stdout)
             .unwrap();
-        println!("456");
         return Some(bytes);
     }
 }

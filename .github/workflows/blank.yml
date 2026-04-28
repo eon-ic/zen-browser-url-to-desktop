@@ -2,14 +2,14 @@ name: Rust Release Build
 
 on:
   push:
+    branches: ["master"]
     tags:
-      - 'v*' # 当推送以 v 开头的 tag 时触发，例如 v1.0.1
+      - "v*" # 当推送以 v 开头的 tag 时触发，例如 v1.0.1
 
 jobs:
   release:
     name: Build and Release
     runs-on: ubuntu-latest
-    # 给予 GITHUB_TOKEN 写入权限以创建 Release
     permissions:
       contents: write
 

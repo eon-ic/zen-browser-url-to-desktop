@@ -1,0 +1,47 @@
+name: Rust Release Build
+
+on:
+  push:
+    tags:
+      - 'v*' # 当推送以 v 开头的 tag 时触发，例如 v1.0.1
+
+jobs:
+  release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    # 给予 GITHUB_TOKEN 写入权限以创建 Release
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build Binary
+        run: cargo build --release --locked
+
+      - name: Prepare Release Asset
+        run: |
+          mkdir -p staging
+          cp target/release/zen-browser-url-to-desktop staging/
+          cd staging
+          tar -czvf ../zen-browser-url-to-desktop-linux-amd64.tar.gz blink
+          cd ..
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: zen-browser-url-to-desktop-linux-amd64.tar.gz
+          # 自动提取 tag 中的版本号作为标题
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

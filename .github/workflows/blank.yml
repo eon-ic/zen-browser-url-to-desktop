@@ -31,7 +31,7 @@ jobs:
           mkdir -p staging
           cp target/release/zen-browser-url-to-desktop staging/
           cd staging
-          tar -czvf ../zen-browser-url-to-desktop-linux-amd64.tar.gz blink
+          tar -czvf ../zen-browser-url-to-desktop-linux-amd64.tar.gz .
           cd ..
 
       - name: Create GitHub Release

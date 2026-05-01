@@ -1,9 +1,6 @@
 name: Rust Release Build
 
 on:
-  # 普通分支：仅构建，不发版
-  push:
-    branches: ["master"]
   # 只有 v 开头 tag 才触发正式发布
   push:
     tags:
